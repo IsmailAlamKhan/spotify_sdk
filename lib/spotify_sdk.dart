@@ -626,6 +626,15 @@ class SpotifySdk {
     }
   }
 
+  static Future connectSwitchToLocalDevice() async {
+    try {
+      return _channel.invokeMethod(MethodNames.connectSwitchToLocalDevice);
+    } on Exception catch (e) {
+      _logException(MethodNames.connectSwitchToLocalDevice, e);
+      rethrow;
+    }
+  }
+
   static void _logException(String method, Exception e) {
     if (e is PlatformException) {
       var message = e.message ?? '';

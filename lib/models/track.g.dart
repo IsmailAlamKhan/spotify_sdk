@@ -13,7 +13,9 @@ Track _$TrackFromJson(Map<String, dynamic> json) => Track(
           .map((e) => Artist.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['duration_ms'] as int,
-      ImageUri.fromJson(json['image_id'] as Map<String, dynamic>),
+      json['image_id'] == null
+          ? null
+          : ImageUri.fromJson(json['image_id'] as Map<String, dynamic>),
       json['name'] as String,
       json['uri'] as String,
       json['linked_from_uri'] as String?,

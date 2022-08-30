@@ -27,7 +27,7 @@ class Track {
   @JsonKey(name: 'duration_ms')
   final int duration;
   @JsonKey(name: 'image_id')
-  final ImageUri imageUri;
+  final ImageUri? imageUri;
   @JsonKey(name: 'is_episode')
   final bool isEpisode;
   @JsonKey(name: 'is_podcast')

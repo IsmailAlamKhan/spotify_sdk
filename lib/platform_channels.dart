@@ -104,6 +104,9 @@ class MethodNames {
 
   /// method name for [setRepeatMode]
   static const String setRepeatMode = 'setRepeatMode';
+
+  /// method name for [connectSwitchToLocalDevice]
+  static const String connectSwitchToLocalDevice = 'connectSwitchToLocalDevice';
 }
 
 /// Holds the names for all parameters that are used in the package
