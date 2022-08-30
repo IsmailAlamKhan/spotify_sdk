@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.spotify.android.appremote.api.ConnectApi
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector.ConnectionListener
 import com.spotify.android.appremote.api.SpotifyAppRemote
@@ -93,6 +94,9 @@ class SpotifySdkPlugin : MethodCallHandler, FlutterPlugin, ActivityAware, Plugin
     //images api
     private val methodGetImage = "getImage"
 
+    //connect api
+    private val connectSwitchToLocalDevice = "connectSwitchToLocalDevice"
+
     private val paramClientId = "clientId"
     private val paramRedirectUrl = "redirectUrl"
     private val paramScope = "scope"
@@ -120,13 +124,13 @@ class SpotifySdkPlugin : MethodCallHandler, FlutterPlugin, ActivityAware, Plugin
     private var spotifyPlayerApi: SpotifyPlayerApi? = null
     private var spotifyUserApi: SpotifyUserApi? = null
     private var spotifyImagesApi: SpotifyImagesApi? = null
+    private var spotifyConnectApi: SpotifyConnectApi? = null
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         onAttachedToEngine(binding.applicationContext, binding.binaryMessenger)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-
         applicationContext = null
 
         methodChannel?.setMethodCallHandler(null)
@@ -168,6 +172,7 @@ class SpotifySdkPlugin : MethodCallHandler, FlutterPlugin, ActivityAware, Plugin
             spotifyPlayerApi = SpotifyPlayerApi(spotifyAppRemote, result)
             spotifyUserApi = SpotifyUserApi(spotifyAppRemote, result)
             spotifyImagesApi = SpotifyImagesApi(spotifyAppRemote, result)
+            spotifyConnectApi = SpotifyConnectApi( spotifyAppRemote, result)
         }
 
         when (call.method) {
@@ -200,6 +205,9 @@ class SpotifySdkPlugin : MethodCallHandler, FlutterPlugin, ActivityAware, Plugin
             methodGetLibraryState -> spotifyUserApi?.getLibraryState(call.argument(paramSpotifyUri))
             //image api calls
             methodGetImage -> spotifyImagesApi?.getImage(call.argument(paramImageUri), call.argument(paramImageDimension))
+
+            //connect api calls
+            connectSwitchToLocalDevice -> spotifyConnectApi?.connectSwitchToLocalDevice()
             // method call is not implemented yet
             else -> result.notImplemented()
         }
